@@ -13,7 +13,7 @@ const app = express();
 
 app.use(
     cors({
-        origin: "http://localhost:3000" ,
+        origin: process.env.FRONT_END_URL ,
         credentials: true
     })
 )
@@ -30,9 +30,11 @@ session({
 
 
 const authRouter = require('./routes/auth');
-const categoriesRouter = require('./routes/categories')
-const contactTypesRouter = require('./routes/contactTypes')
-const visitsRouter = require("./routes/visits")
+const userRouter = require("./routes/user");
+const categoriesRouter = require('./routes/categories');
+const contactTypesRouter = require('./routes/contactTypes');
+const visitsRouter = require("./routes/visits");
+
 
 // const app = express();
 
@@ -43,8 +45,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/auth', authRouter);
+app.use('/api/user', userRouter);
 app.use('/api/categories', categoriesRouter);
 app.use('/api/contactTypes', contactTypesRouter);
 app.use('/api/visits', visitsRouter);
+
 
 module.exports = app;
