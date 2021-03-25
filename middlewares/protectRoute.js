@@ -8,7 +8,9 @@ const protectAuth = (sessionType) => {
         if (!req.session.currentUser) {
           return res.status(401).json({ message: "Unauthorized" });
         } else {
-            if (sessionType !== "admin" || req.session.currentUser.isAdmin) {
+            if (sessionType === "benevole" || req.session.currentUser.isAdmin) {
+                // equivalent to if (sessionType === "benevole" ) next
+                // else id (sessionType === "admin" && user=admin) next    
                 next();
             } else {
                 return res.status(401).json({ message: "Unauthorized" });
@@ -17,6 +19,9 @@ const protectAuth = (sessionType) => {
       };
 
 }
+
+
+
   
 module.exports = protectAuth;
   

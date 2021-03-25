@@ -8,7 +8,7 @@ const protectAuth = require("./../middlewares/protectRoute")
 const salt = 10;
 
 ///////////////////////////////////// 
-//  Signin 
+//  Signin / logout
 /////////////////////////////////////
 
 router.post("/signin", (req, res, next) => {
@@ -91,7 +91,6 @@ router.post("/create", protectAuth("admin"), (req, res, next) => {
   // then the owner of an acconut can update it.
   // Only admins can create an account, thats why we use protectAuth("admin") middlware (it's a closure)
   const { login, password, isAdmin } = req.body;
-  console.log(req.body)
 
   User.findOne({ login })
     .then((userDocument) => {
@@ -117,6 +116,7 @@ router.delete("/delete/:id", protectAuth("admin"),  async (req, res, next) => {
     const {id} = req.params ;
 
     const deletedUser = await User.findByIdAndDelete(id) ;
+
     if(deletedUser) {
       res.status(200).json(deletedUser)
     } else {
@@ -135,7 +135,7 @@ router.patch("/edit/:id", protectAuth("benevole"), async (req, res, next) => {
 
     if (id != req.session.currentUser.id) {
       // the user can only update its own account
-      res.status(403).json("Users can edit only there own account") ;
+      res.status(403).json("Users can edit only their own account") ;
       return
     }
 
@@ -156,7 +156,10 @@ router.patch("/edit/:id", protectAuth("benevole"), async (req, res, next) => {
       {new: true}) ;
 
     if(updatedUser) {
-      res.status(200).json(updatedUser)
+      // updatedUser.toObject()
+      // delete updatedUser.password
+      const {login, isAdmin, _id} = updatedUser
+      res.status(200).json({login, isAdmin, _id})
     } else {
       res.status(400).json("User doesn't exist")
     }
