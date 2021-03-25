@@ -5,7 +5,18 @@ const protectRoute = require('./../middlewares/protectRoute');
 
 /* GET the visits listing. */
 router.get("/", protectRoute('benevole'), (req, res, next) => {
-  Visits.find()
+  // console.log(Date.now().toISOString().substring(0,9))
+  const today=new Date()
+  const dateBegin = today.toISOString().substring(0,10) + " 00:00:00"
+  const dateEnd = today.toISOString().substring(0,10) + " 23:59:59"
+  Visits
+    .find({
+      date: {
+        $gte: dateBegin, 
+        $lt: dateEnd
+      }
+    })
+    .sort({date: -1})
     .populate("category contactType")
     .then((success) => res.status(200).json(success))
     .catch((error) => {
