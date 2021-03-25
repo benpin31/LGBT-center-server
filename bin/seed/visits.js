@@ -34,6 +34,8 @@ const insert = async() => {
         console.log(`seed users done : ${inserted.length} documents inserted !`);
         mongoose.connection.close().then((success) => console.log("WELL CLOSED"));
 
+
+
     } catch(err) {
         console.error(err);
         mongoose.connection.close().then((success) => console.log("WELL CLOSED"));
