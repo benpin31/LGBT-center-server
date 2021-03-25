@@ -1,9 +1,10 @@
 var express = require("express");
 var router = express.Router();
 const Visits = require("../model/visits");
+const protectRoute = require('./../middlewares/protectRoute');
 
 /* GET the visits listing. */
-router.get("/", (req, res, next) => {
+router.get("/", protectRoute('benevole'), (req, res, next) => {
   Visits.find()
     .populate("category contactType")
     .then((success) => res.status(200).json(success))
@@ -14,7 +15,7 @@ router.get("/", (req, res, next) => {
 });
 
 /* POST create visits. */
-router.post("/", (req, res, next) => {
+router.post("/", protectRoute('benevole'), (req, res, next) => {
   let { category, contactType } = req.body;
 
   Visits.create({ category, contactType })
@@ -23,24 +24,16 @@ router.post("/", (req, res, next) => {
 });
 
 /* PATCH modify visits. */
-router.patch("/:id", (req, res, next) => {
-  if (req.body.category === "" || req.body.contactType === "") {
-    res
-      .status(400)
-      .json({ message: "category or contactType should not be empty" });
-  } else if (req.body.date > Date.now()) {
-    res
-      .status(400)
-      .json({ message: "the date shoudn't be superior as today's date" });
-  } else {
-    Visits.findByIdAndUpdate(eq.params.id, req.body)
-      .then((success) => res.status(200).json(success))
-      .catch((error) => res.status(500).json(error));
-  }
+router.patch("/:id", protectRoute('benevole'), (req, res, next) => {
+  //V2 check if category - contact exists and is current
+  Visits.findByIdAndUpdate(req.params.id, req.body, {new:true})
+    .then((success) => res.status(200).json(success))
+    .catch((error) => res.status(500).json(error));
+
 });
 
 /* DELETE visits. */
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", protectRoute('benevole'), (req, res, next) => {
   Visits.findByIdAndDelete(req.params.id)
     .then((success) => res.status(200).json(success))
     .catch((error) => res.status(500).json(error));
