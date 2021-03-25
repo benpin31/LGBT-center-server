@@ -5,9 +5,12 @@ const Visits = require("../model/visits");
 /* GET the visits listing. */
 router.get("/", (req, res, next) => {
   Visits.find()
-    .populate("category")
+    .populate("category contactType")
     .then((success) => res.status(200).json(success))
-    .catch((error) => res.status(500).json(error));
+    .catch((error) => {
+      console.log(error)
+      res.status(500).json(error);
+    });
 });
 
 /* POST create visits. */
@@ -20,7 +23,7 @@ router.post("/", (req, res, next) => {
 });
 
 /* PATCH modify visits. */
-router.patch("/:visitId", (req, res, next) => {
+router.patch("/:id", (req, res, next) => {
   if (req.body.category === "" || req.body.contactType === "") {
     res
       .status(400)
@@ -30,15 +33,15 @@ router.patch("/:visitId", (req, res, next) => {
       .status(400)
       .json({ message: "the date shoudn't be superior as today's date" });
   } else {
-    Visits.findByIdAndUpdate(req.body)
+    Visits.findByIdAndUpdate(eq.params.id, req.body)
       .then((success) => res.status(200).json(success))
       .catch((error) => res.status(500).json(error));
   }
 });
 
 /* DELETE visits. */
-router.delete("/:visitId", (req, res, next) => {
-  Visits.findByIdAndDelete(req.params.visitId)
+router.delete("/:id", (req, res, next) => {
+  Visits.findByIdAndDelete(req.params.id)
     .then((success) => res.status(200).json(success))
     .catch((error) => res.status(500).json(error));
 });
