@@ -21,7 +21,7 @@ router.get("/", protectAuth("admin"), async (req, res, next) => {
   }
 });
 
-router.get("/:id", protectAuth("benevole"), async (req, res, next) => {
+router.get("/:id", protectAuth("admin"), async (req, res, next) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id);
@@ -77,7 +77,7 @@ router.delete("/delete/:id", protectAuth("admin"), async (req, res, next) => {
   }
 });
 
-router.patch("/edit/:id", protectAuth("benevole"), async (req, res, next) => {
+router.patch("/edit/:id", protectAuth("admin"), async (req, res, next) => {
   try {
     const { id } = req.params;
     const { login, password } = req.body;

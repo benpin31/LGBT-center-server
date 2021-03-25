@@ -4,7 +4,7 @@ const Visits = require("../model/visits");
 const protectRoute = require('./../middlewares/protectRoute');
 
 /* GET the visits listing. */
-router.get("/", protectRoute('benevole'), (req, res, next) => {
+router.get("/", protectRoute('volunteer'), (req, res, next) => {
   // console.log(Date.now().toISOString().substring(0,9))
   const today=new Date()
   const dateBegin = today.toISOString().substring(0,10) + " 00:00:00"
@@ -26,7 +26,7 @@ router.get("/", protectRoute('benevole'), (req, res, next) => {
 });
 
 /* POST create visits. */
-router.post("/", protectRoute('benevole'), (req, res, next) => {
+router.post("/", protectRoute('volunteer'), (req, res, next) => {
   let { category, contactType } = req.body;
 
   Visits.create({ category, contactType })
@@ -35,7 +35,7 @@ router.post("/", protectRoute('benevole'), (req, res, next) => {
 });
 
 /* PATCH modify visits. */
-router.patch("/:id", protectRoute('benevole'), (req, res, next) => {
+router.patch("/:id", protectRoute('volunteer'), (req, res, next) => {
   //V2 check if category - contact exists and is current
   Visits.findByIdAndUpdate(req.params.id, req.body, {new:true})
     .then((success) => res.status(200).json(success))
@@ -44,7 +44,7 @@ router.patch("/:id", protectRoute('benevole'), (req, res, next) => {
 });
 
 /* DELETE visits. */
-router.delete("/:id", protectRoute('benevole'), (req, res, next) => {
+router.delete("/:id", protectRoute('volunteer'), (req, res, next) => {
   Visits.findByIdAndDelete(req.params.id)
     .then((success) => res.status(200).json(success))
     .catch((error) => res.status(500).json(error));

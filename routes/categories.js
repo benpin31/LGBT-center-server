@@ -6,7 +6,7 @@ const protectRoute = require('./../middlewares/protectRoute');
 // api/categories
 
 // GET all categories 
-router.get('/', protectRoute('benevole'), (req, res, next) => {
+router.get('/', protectRoute('volunteer'), (req, res, next) => {
   CategoriesModel.find()
   .then(dbSuccess => res.status(200).json(dbSuccess))
   .catch(err => res.status(500).json(err));
