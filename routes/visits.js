@@ -4,7 +4,7 @@ const Visits = require("../model/visits");
 
 /* GET the visits listing. */
 router.get("/", (req, res, next) => {
-  Visits.find(/*{ date: Date.now() }*/)
+  Visits.find()
     .populate("category")
     .then((success) => res.status(200).json(success))
     .catch((error) => res.status(500).json(error));
