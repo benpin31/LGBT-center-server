@@ -8,11 +8,11 @@ async function create() {
   const toInsert = [
     {
       name: "Téléphone",
-      current: true
+      isActive: true
     },
     {
         name: "Physique",
-        current: true
+        isActive: true
     },
 
   ];

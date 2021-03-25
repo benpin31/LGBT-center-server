@@ -23,7 +23,7 @@ const insert = async() => {
     
         const toInsert = seed.map(visit => {
             return {
-                visitCategory: getId("name", visit.category, visitCategories),
+                category: getId("name", visit.category, visitCategories),
                 contactType: getId("name", visit.contactType, contactTypes),
                 date: visit.date
                 }

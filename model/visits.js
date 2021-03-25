@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 
 const schema = new Schema( {
-    visitCategory:       {
+    category:       {
         type: Schema.Types.ObjectId,
-        ref: "visitCategories",
+        ref: "categories",
         required: true
       },
     contactType: {
@@ -15,5 +15,5 @@ const schema = new Schema( {
     date: {type: Date, default: Date.now()},
 })
 
-const visitsModel = mongoose.model("visits", schema);
-module.exports = visitsModel;
+const VisitsModel = mongoose.model("visits", schema);
+module.exports = VisitsModel;

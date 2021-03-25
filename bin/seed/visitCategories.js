@@ -8,53 +8,53 @@ async function create() {
   const toInsert = [
     {
       name: "Bar associatif",
-      description: "toto",
-      current: true
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestias.",
+      isActive: true
     },
     {
         name: "Doc associatives",
-        description: "toto",
-        current: true
+        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestias.",
+        isActive: true
     },
     {
         name: "Infos touristiques",
-        description: "toto",
-        current: true
+        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestias.",
+        isActive: true
     },
     {
         name: "Docs infos santé",
-        description: "toto",
-        current: true
+        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestias.",
+        isActive: true
     },
     {
         name: "activités Pôle Santé",
-        description: "toto",
-        current: true
+        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestias.",
+        isActive: true
     },
     {
         name: "Activités Pôle Culture",
-        description: "toto",
-        current: true
+        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestias.",
+        isActive: true
     },
     {
         name: "Autres activités",
-        description: "toto",
-        current: true
+        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestias.",
+        isActive: true
     },
     {
         name: "événements hors pôles",
-        description: "toto",
-        current: true
+        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestias.",
+        isActive: true
     },
     {
         name: "Activités des associations",
-        description: "toto",
-        current: true
+        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestias.",
+        isActive: true
     },
     {
         name: "Autres",
-        description: "toto",
-        current: true
+        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestias.",
+        isActive: true
     },
 
   ];
@@ -74,3 +74,5 @@ async function insertUsers() {
 }
 
 insertUsers();
+
+

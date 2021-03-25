@@ -4,8 +4,8 @@ const { Schema, model } = mongoose;
 const schema = new Schema( {
     name: {type: String, required: true},
     description: {type: String, required: true},
-    current: {type: Boolean, required: true}
+    isActive: {type: Boolean, required: true}
 })
 
-const visitCategoriesModel = mongoose.model("visitCategories", schema);
-module.exports = visitCategoriesModel;
+const CategoriesModel = mongoose.model("categories", schema);
+module.exports = CategoriesModel;
