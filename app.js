@@ -6,10 +6,14 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const session = require("express-session");
-const cors = require("cors")
 const MongoStore = require("connect-mongo")(session);
 const mongoose = require("mongoose");
+const cors = require("cors");
+const getDevEnvironment = require("./middlewares/devEnvironment")
 const app = express();
+
+
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -32,9 +36,9 @@ app.use(
         saveUninitialized: true,
         cookie: {maxAge: new Date(Date.now() + (30 * 86400 * 1000))}
     })
-    );
+);
 
-
+app.use(getDevEnvironment) ;
 
 const authRouter = require('./routes/auth');
 const userRouter = require("./routes/user");

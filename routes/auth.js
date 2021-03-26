@@ -3,8 +3,6 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const User = require("./../model/users");
 
-const protectAuth = require("./../middlewares/protectRoute");
-
 const salt = 10;
 
 ///////////////////////////////////// 
