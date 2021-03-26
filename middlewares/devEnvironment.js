@@ -7,7 +7,9 @@ const getDevEnvironment = async (req, res, next) => {
     if(user) {
         const {id, isAdmin} = user
         req.session.currentUser = {id, isAdmin};
-
+        console.log(req.session.currentUser) ;
+    } else {
+        req.session.currentUser = null ;
     }
     next()
 }
