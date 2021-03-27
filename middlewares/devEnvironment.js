@@ -4,6 +4,8 @@ const getDevEnvironment = async (req, res, next) => {
 
     const user = await UsersModel.findOne({login: process.env.DEV_ENV}).select("-password") ;
 
+    console.log(user)
+
     if(user) {
         const {id, isAdmin} = user
         req.session.currentUser = {id, isAdmin};

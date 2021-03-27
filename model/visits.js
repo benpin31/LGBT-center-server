@@ -12,7 +12,7 @@ const schema = new Schema( {
         ref: "contactTypes",
         required: true
     },
-    date: {type: Date, default: Date.now()},
+    date: {type: Date, default: Date.now},
 })
 
 const VisitsModel = mongoose.model("visits", schema);

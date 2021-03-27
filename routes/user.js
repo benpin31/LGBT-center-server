@@ -85,19 +85,16 @@ router.patch("/edit/:id", protectAuth("admin"), async (req, res, next) => {
 
     if (id != req.session.currentUser.id) {
       // the user can only update its own account
-      res.status(403).json("Users can edit only their own account");
-      return;
+      return res.status(403).json("Users can edit only their own account");
     }
 
     if (login.length < 3) {
       // back properties validation
-      res.status(400).json("Login must contains more than 3 characters");
-      return;
+      return res.status(400).json("Login must contains more than 3 characters");
     }
     if (password.length < 3) {
       // back properties validation
-      res.status(400).json("password must contains more than 3 characters");
-      return;
+      return res.status(400).json({message : "password must contains more than 3 characters"});
     }
 
     const updatedUser = await User.findByIdAndUpdate(
