@@ -14,6 +14,10 @@ async function create() {
         name: "Physique",
         isActive: true
     },
+    {
+      name: "Lettre manuscrite",
+      isActive: false
+    }
 
   ];
   return toInsert;

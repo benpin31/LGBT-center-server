@@ -56,6 +56,12 @@ async function create() {
         description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestias.",
         isActive: true
     },
+    {
+      name:"lipstick",
+      description: "Lorem ipsum dolor sit amet consectetur.",
+      isActive: false
+
+    }
 
   ];
   return toInsert;

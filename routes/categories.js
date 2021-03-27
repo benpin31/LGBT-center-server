@@ -25,6 +25,7 @@ router.post('/', protectRoute('admin'), (req, res, next) => {
   // if change name-description : get isActive data and add it yourself in req.body
 router.patch('/:id', protectRoute('admin'), (req, res, next) => {
   const {name, description} = req.body;
+  console.log(name, description)
   if(name.length < 3 || description.length < 3) {
     res.status(400).json("name and/or description too short");
     return
