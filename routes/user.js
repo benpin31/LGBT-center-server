@@ -83,7 +83,7 @@ router.patch("/edit/:id", protectAuth("admin"), async (req, res, next) => {
     const { login, password } = req.body;
     //  the user can't modify the fact that he is admin or not
 
-    if (id != req.session.currentUser.id) {
+    if (id != req.session.currentUser.id & !req.session.currentUser.isAdmin) {
       // the user can only update its own account
       return res.status(403).json("Users can edit only their own account");
     }

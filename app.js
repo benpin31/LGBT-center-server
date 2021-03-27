@@ -38,7 +38,7 @@ app.use(
     })
 );
 
-app.use(getDevEnvironment) ;
+// app.use(getDevEnvironment) ;
 
 const authRouter = require('./routes/auth');
 const userRouter = require("./routes/user");
