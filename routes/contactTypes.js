@@ -7,7 +7,10 @@ const protectRoute = require('./../middlewares/protectRoute');
 
 // GET all contacts 
 router.get('/', protectRoute('volunteer'), (req, res, next) => {
-  ContactTypesModel.find()
+  ContactTypesModel
+  .find()
+  .sort({name:1})
+  .collation({ locale: 'en_US', caseLevel: true }) // Mongo sort uppercase before lowercase : use to avoid that
   .then(dbSuccess => res.status(200).json(dbSuccess))
   .catch(err => res.status(500).json(err));
 });

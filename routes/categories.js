@@ -7,13 +7,22 @@ const protectRoute = require('./../middlewares/protectRoute');
 
 // GET all categories 
 router.get('/', protectRoute('volunteer'), (req, res, next) => {
-  CategoriesModel.find()
+  CategoriesModel
+  .find()
+  .sort({name: 1})
+  .collation({ locale: 'en_US', caseLevel: true }) // Mongo sort uppercase before lowercase : use to avoid that
   .then(dbSuccess => res.status(200).json(dbSuccess))
   .catch(err => res.status(500).json(err));
 });
 
 // POST a new categorie
 router.post('/', protectRoute('admin'), (req, res, next) => {
+  const {name, description} = req.body;
+  if(name.length < 3 || description.length < 3) {
+    res.status(400).json("name and/or description too short");
+    return
+  }
+
   CategoriesModel.create(req.body)
   .then(dbSuccess => res.status(200).json(dbSuccess))
   .catch(err => res.status(500).json(err));
@@ -25,7 +34,6 @@ router.post('/', protectRoute('admin'), (req, res, next) => {
   // if change name-description : get isActive data and add it yourself in req.body
 router.patch('/:id', protectRoute('admin'), (req, res, next) => {
   const {name, description} = req.body;
-  console.log(name, description)
   if(name.length < 3 || description.length < 3) {
     res.status(400).json("name and/or description too short");
     return

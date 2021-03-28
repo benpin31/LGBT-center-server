@@ -14,7 +14,12 @@ const salt = 10;
 router.get("/", protectAuth("admin"), async (req, res, next) => {
   // get all users : only for admins
   try {
-    const users = await User.find().select("-password");
+    const users = await User
+                          .find()
+                          .select("-password")
+                          .sort({login: 1})
+                          .collation({ locale: 'en_US', caseLevel: true }) ; // Mongo sort uppercase before lowercase : use to avoid that
+                          
     res.status(200).json(users);
   } catch (err) {
     res.status(500).json({ err });
@@ -82,6 +87,10 @@ router.patch("/edit/:id", protectAuth("admin"), async (req, res, next) => {
     const { id } = req.params;
     const { login, password } = req.body;
     //  the user can't modify the fact that he is admin or not
+    //  He ca also choose not to update nthe password. As we can't 
+    //  send the password to the front to add it as default value of the input,
+    //  Front can return an undifined password. In that case, the update don't change the
+    // current password
 
     if (id != req.session.currentUser.id & !req.session.currentUser.isAdmin) {
       // the user can only update its own account
@@ -92,14 +101,19 @@ router.patch("/edit/:id", protectAuth("admin"), async (req, res, next) => {
       // back properties validation
       return res.status(400).json("Login must contains more than 3 characters");
     }
-    if (password.length < 3) {
+    if (password && password.length < 3) {
       // back properties validation
       return res.status(400).json({message : "password must contains more than 3 characters"});
     }
 
+    const newProperties = {login}
+    if(password) {
+      newProperties.password = bcrypt.hashSync(password, 10) ;
+    }
+
     const updatedUser = await User.findByIdAndUpdate(
       id,
-      { login, password: bcrypt.hashSync(password, 10) },
+      newProperties,
       { new: true }
     );
 
