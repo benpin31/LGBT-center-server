@@ -94,13 +94,14 @@ router.patch("/edit/:id", protectAuth("admin"), async (req, res, next) => {
   try {
     const { id } = req.params;
     const { login, password } = req.body;
+    console.log(req.body)
     //  the user can't modify the fact that he is admin or not
     //  He can also choose not to update the password. As we can't 
     //  send the password to the front to add it as default value of the input,
     //  Front can return an undifined password. In that case, the update don't change the
     //  current password
 
-    if (id != req.session.currentUser.id) {
+    if (id != req.session.currentUser.id && req.body.isAdmin) {
       // the user can only update its own account
       return res.status(403).json("Users can edit only their own account");
     }
