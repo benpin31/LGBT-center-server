@@ -7,60 +7,39 @@ const visitCategoriesModel = require("./../../model/visitCategories")
 async function create() {
   const toInsert = [
     {
-      name: "Bar associatif",
-      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestias.",
+      name: "Infos LGBTQI docs",
+      description: "Informations générales sur la communauté, le tourisme, les loisirs, les associations, la culture, les flyers.",
       isActive: true
     },
     {
-        name: "Doc associatives",
-        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestias.",
-        isActive: true
+      name: "Infos santé",
+      description: "Informations sur la santé, les préservatifs, les flyers.",
+      isActive: true
     },
     {
-        name: "Infos touristiques",
-        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestias.",
-        isActive: true
+      name: "Aide urgences",
+      description: "Demande d'une aide à catactère urgent : hébergement, à la suite d'une agression...",
+      isActive: true
     },
     {
-        name: "Docs infos santé",
-        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestias.",
-        isActive: true
+      name: "Activités du centre",
+      description: "Ce qui est organisé par le centre : permanences, bibliothèque, vernissages, événements divers.",
+      isActive: true
     },
     {
-        name: "activités Pôle Santé",
-        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestias.",
-        isActive: true
+      name: "Activités des associations",
+      description: "Tout ce qui est organisé par les associations, réunions, événements.",
+      isActive: true
     },
     {
-        name: "Activités Pôle Culture",
-        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestias.",
-        isActive: true
+      name: "Convivialité bar",
+      description: "Les personnes qui passent juste pour être présentent, qui se donnent rendez-vous, qui viennent au bar.",
+      isActive: true
     },
     {
-        name: "Autres activités",
-        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestias.",
-        isActive: true
-    },
-    {
-        name: "événements hors pôles",
-        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestias.",
-        isActive: true
-    },
-    {
-        name: "Activités des associations",
-        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestias.",
-        isActive: true
-    },
-    {
-        name: "Autres",
-        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, molestias.",
-        isActive: true
-    },
-    {
-      name:"lipstick",
-      description: "Lorem ipsum dolor sit amet consectetur.",
-      isActive: false
-
+      name: "Autres",
+      description: "Quand on n'est pas sûr.",
+      isActive: true
     }
 
   ];
