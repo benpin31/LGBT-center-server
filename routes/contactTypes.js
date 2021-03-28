@@ -17,6 +17,12 @@ router.get('/', protectRoute('volunteer'), (req, res, next) => {
 
 // POST a new contact
 router.post('/', protectRoute('admin'), (req, res, next) => {
+  const {name} = req.body;
+  if(name.length < 3) {
+    res.status(400).json("name too short");
+    return
+  }
+
   ContactTypesModel.create(req.body)
   .then(dbSuccess => res.status(200).json(dbSuccess))
   .catch(err => res.status(500).json(err));
@@ -27,6 +33,12 @@ router.post('/', protectRoute('admin'), (req, res, next) => {
   // if change isActive : get name data and add it yourself in req.body
   // if change name : get isActive data and add it yourself in req.body
 router.patch('/:id', protectRoute('admin'), (req, res, next) => {
+  const {name} = req.body;
+  if(name.length < 3) {
+    res.status(400).json("name too short");
+    return
+  }
+
   ContactTypesModel.findByIdAndUpdate(req.params.id, req.body, {new:true})
   .then(dbSuccess => res.status(200).json(dbSuccess))
   .catch(err => res.status(500).json(err));
