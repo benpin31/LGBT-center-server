@@ -50,7 +50,7 @@ router.post("/create", protectAuth("admin"), (req, res, next) => {
   User.findOne({ login })
     .then((userDocument) => {
       if (userDocument) {
-        return res.status(400).json({ message: "Login already taken" });
+        return res.status(400).json({ message: "Login already used" });
       }
 
       const hashedPassword = bcrypt.hashSync(password, salt);
@@ -67,8 +67,16 @@ router.post("/create", protectAuth("admin"), (req, res, next) => {
 
 router.delete("/delete/:id", protectAuth("admin"), async (req, res, next) => {
   // Only admins can create an account, thats why we use protectAuth("admin") middlware (it's a closure)
+  // a user can't delete its own account
+
+  const { id } = req.params;
+  const { currentUser } = req.session;
+
+  if (currentUser.id === id) {
+    return res.status(403).json({message : "A user can't delete his/her own account"})
+  }
+
   try {
-    const { id } = req.params;
 
     const deletedUser = await User.findByIdAndDelete(id);
 
@@ -87,12 +95,12 @@ router.patch("/edit/:id", protectAuth("admin"), async (req, res, next) => {
     const { id } = req.params;
     const { login, password } = req.body;
     //  the user can't modify the fact that he is admin or not
-    //  He ca also choose not to update nthe password. As we can't 
+    //  He can also choose not to update the password. As we can't 
     //  send the password to the front to add it as default value of the input,
     //  Front can return an undifined password. In that case, the update don't change the
-    // current password
+    //  current password
 
-    if (id != req.session.currentUser.id & !req.session.currentUser.isAdmin) {
+    if (id != req.session.currentUser.id) {
       // the user can only update its own account
       return res.status(403).json("Users can edit only their own account");
     }
