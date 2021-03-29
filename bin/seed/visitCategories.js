@@ -33,7 +33,7 @@ async function create() {
     },
     {
       name: "Convivialité bar",
-      description: "Les personnes qui passent juste pour être présentent, qui se donnent rendez-vous, qui viennent au bar.",
+      description: "Les personnes qui passent juste pour être présentes, qui se donnent rendez-vous, qui viennent au bar.",
       isActive: true
     },
     {
