@@ -4,7 +4,6 @@ const protectAuth = (protectionLevel) => {
     //  else, all volunteers can connect
 
     return  (req, res, next) => {
-        // console.log(req.session)
         if (!req.session.currentUser) {
           return res.status(401).json({ message: "Unauthorized" });
         } else {

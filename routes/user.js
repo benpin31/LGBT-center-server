@@ -94,7 +94,6 @@ router.patch("/edit/:id", protectAuth("admin"), async (req, res, next) => {
   try {
     const { id } = req.params;
     const { login, password } = req.body;
-    console.log(req.body)
     //  the user can't modify the fact that he is admin or not
     //  He can also choose not to update the password. As we can't 
     //  send the password to the front to add it as default value of the input,

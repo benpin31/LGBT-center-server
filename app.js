@@ -35,6 +35,8 @@ app.use(
         resave: true,
         saveUninitialized: true,
         cookie: {maxAge: new Date(Date.now() + (30 * 86400 * 1000))}
+        // cookie: {maxAge: new Date(Date.now() + (30 * 86400 * 1000))}
+        // cookie: {maxAge: 8000000}
     })
 );
 
@@ -45,7 +47,7 @@ const userRouter = require("./routes/user");
 const categoriesRouter = require('./routes/categories');
 const contactTypesRouter = require('./routes/contactTypes');
 const visitsRouter = require("./routes/visits");
-
+const insightRouter = require("./routes/insight")
 
 
 app.use('/api/auth', authRouter);
@@ -53,6 +55,7 @@ app.use('/api/user', userRouter);
 app.use('/api/categories', categoriesRouter);
 app.use('/api/contactTypes', contactTypesRouter);
 app.use('/api/visits', visitsRouter);
+app.use('/api/insight', insightRouter)
 
 
 module.exports = app;
