@@ -15,7 +15,7 @@ async function create() {
         isActive: true
     },
     {
-      name: "Lettre manuscrite",
+      name: "Email",
       isActive: false
     }
 

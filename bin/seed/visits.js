@@ -10,6 +10,7 @@ const seed = require('./seed.json')
 
 
 getId = (propertyName, value, db) => {
+    // console.log(value) 
     return  db.find(doc => doc[propertyName] === value)._id
 }
 
