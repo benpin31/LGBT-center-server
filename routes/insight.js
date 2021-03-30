@@ -85,7 +85,7 @@ router.post("/get-popular-days", protectRoute('volunteer'), async (req, res, nex
   }
 
 
-  res.status(200).json(agregatedData) ;
+  res.status(200).json({agregatedData, updatedDates: [weekBegin, weekEnd]}) ;
 
   } catch(err) {
     res.status(500).json(err);

@@ -30,6 +30,7 @@ const insert = async() => {
                 }
             }
         )
+        console.log(new Date())
         const toInsertToday = toInsert.filter(visit => new Date(visit.date) < new Date()) ;
 
         const inserted = await visitsModel.insertMany(toInsertToday);
