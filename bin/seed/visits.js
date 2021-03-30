@@ -30,10 +30,12 @@ const insert = async() => {
                 }
             }
         )
-        
-        const inserted = await visitsModel.insertMany(toInsert);
+        const toInsertToday = toInsert.filter(visit => new Date(visit.date) < new Date()) ;
+
+        const inserted = await visitsModel.insertMany(toInsertToday);
         console.log(`seed users done : ${inserted.length} documents inserted !`);
         mongoose.connection.close().then((success) => console.log("WELL CLOSED"));
+
 
 
 
