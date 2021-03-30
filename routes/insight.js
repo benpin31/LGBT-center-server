@@ -6,8 +6,6 @@ const protectRoute = require('./../middlewares/protectRoute');
 /* return the number of visit per category inside a given date range (in req.body). */
 router.post("/get-category-repartition", protectRoute('volunteer'), async (req, res, next) => {
 
-  console.log(req.body)
-
   const dateBegin = new Date(req.body.dates[0]) ;
   const dateEnd = new Date(req.body.dates[1]) ;
 
@@ -79,8 +77,6 @@ router.post("/get-popular-days", protectRoute('volunteer'), async (req, res, nex
     }
   })
 
-  console.log(agregatedDataTemp)
-
   //  transform the aggregated data in the rechart (datavis library) format : [{name: "lundi", value: value}, {name: "mardi", value: value}]
   const dayNames = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
   const agregatedData = [] ;
@@ -101,7 +97,6 @@ router.post("/get-popular-days", protectRoute('volunteer'), async (req, res, nex
 
 /*  Get the average number of visit per hours given a date range. */
 router.post("/get-popular-hours", protectRoute('volunteer'), async (req, res, next) => {
-
 
   const {dates, weekDays} = req.body ;
 
