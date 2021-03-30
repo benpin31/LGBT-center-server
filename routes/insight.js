@@ -6,8 +6,10 @@ const protectRoute = require('./../middlewares/protectRoute');
 /* return the number of visit per category inside a given date range (in req.body). */
 router.post("/get-category-repartition", protectRoute('volunteer'), async (req, res, next) => {
 
-  const dateBegin = new Date(req.body[0]) ;
-  const dateEnd = new Date(req.body[1]) ;
+  console.log(req.body)
+
+  const dateBegin = new Date(req.body.dates[0]) ;
+  const dateEnd = new Date(req.body.dates[1]) ;
 
   try {
     const visits = await Visits
@@ -66,6 +68,7 @@ router.post("/get-popular-days", protectRoute('volunteer'), async (req, res, nex
   const agregatedDataTemp = {} ;
   let day ;
   let nbWeek = (weekEnd - weekBegin)/(1000 * 60 * 60 * 24 * 7) ;
+    //  weekEnd - weekBegin in millisecond
 
   visits.forEach(visit => {
     day = visit.date.getDay() ;
@@ -76,11 +79,13 @@ router.post("/get-popular-days", protectRoute('volunteer'), async (req, res, nex
     }
   })
 
+  console.log(agregatedDataTemp)
+
   //  transform the aggregated data in the rechart (datavis library) format : [{name: "lundi", value: value}, {name: "mardi", value: value}]
   const dayNames = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
   const agregatedData = [] ;
   for (let segment in agregatedDataTemp) {
-    agregatedData.push({name: dayNames[segment], value: agregatedDataTemp[segment]})
+    agregatedData.push({name: dayNames[segment], value: Math.floor(agregatedDataTemp[segment])})
   }
 
 
@@ -114,38 +119,38 @@ router.post("/get-popular-hours", protectRoute('volunteer'), async (req, res, ne
     })
     .populate("category contactType")
 
-  //  Filter by days selected by the user
-  if (weekDays) {
-    const dayNames = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
-    weekDayNumbers = weekDays.map(weekDay => dayNames.indexOf(weekDay))
-    visits = visits.filter(visit =>  weekDayNumbers.includes(visit.date.getDay())) ;
-  } 
-    
-  //  aggregate the data : the result od an object of the type {"1": value, "2": value } where "1", "2" is the day of the hour
-  //  and value the number of visits
-  const agregatedDataTemp = {} ;
-  let hour ;
-  let nbDays = [...new Set(visits.map(visit => visit.date.getDate()))].length ;
-    //  get number of day for the division in the average value. Be carrefull, with this method, if one day, nobody comes, 
-    //  the day will not be take into account. However, the methide which consists in doing dateEnd-dateBegin is not correct
-    //  because the LGBTQI+ center is closed on sunday, and it is unlikely nobody comes one day
+    //  Filter by days selected by the user
+    if (weekDays) {
+      const dayNames = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+      weekDayNumbers = weekDays.map(weekDay => dayNames.indexOf(weekDay))
+      visits = visits.filter(visit =>  weekDayNumbers.includes(visit.date.getDay())) ;
+    } 
+      
+    //  aggregate the data : the result od an object of the type {"1": value, "2": value } where "1", "2" is the day of the hour
+    //  and value the number of visits
+    const agregatedDataTemp = {} ;
+    let hour ;
+    let nbDays = [...new Set(visits.map(visit => visit.date.getDate()))].length ;
+      //  get number of day for the division in the average value. Be carrefull, with this method, if one day, nobody comes, 
+      //  the day will not be take into account. However, the methide which consists in doing dateEnd-dateBegin is not correct
+      //  because the LGBTQI+ center is closed on sunday, and it is unlikely nobody comes one day
 
-  visits.forEach(visit => {
-    hour = visit.date.getHours() ;
-    if (agregatedDataTemp[hour]) {
-      agregatedDataTemp[hour] = agregatedDataTemp[hour]+1/nbDays ;
-    } else {
-      agregatedDataTemp[hour] = 1/nbDays ;
+    visits.forEach(visit => {
+      hour = visit.date.getHours() ;
+      if (agregatedDataTemp[hour]) {
+        agregatedDataTemp[hour] = agregatedDataTemp[hour]+1/nbDays ;
+      } else {
+        agregatedDataTemp[hour] = 1/nbDays ;
+      }
+    })
+
+    // transforme in the good rechart format
+    const agregatedData = []  ;
+    for (let segment in agregatedDataTemp) {
+      agregatedData.push({name: `${segment}h-${Number(segment)+1}h`, value: Math.floor(agregatedDataTemp[segment])})
     }
-  })
 
-  // transforme in the good rechart format
-  const agregatedData = []  ;
-  for (let segment in agregatedDataTemp) {
-    agregatedData.push({name: segment, value: agregatedDataTemp[segment]})
-  }
-
-  res.status(200).json(agregatedData) ;
+    res.status(200).json(agregatedData) ;
 
   } catch(err) {
     res.status(500).json(err);
