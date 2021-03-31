@@ -99,7 +99,6 @@ router.post("/get-popular-days", protectRoute('volunteer'), async (req, res, nex
 router.post("/get-popular-hours", protectRoute('volunteer'), async (req, res, next) => {
 
   const {dates, weekDays} = req.body ;
-  console.log(weekDays)
 
   const dateBegin = new Date(dates[0]) ;
   const dateEnd = new Date(dates[1]) ;
@@ -154,6 +153,33 @@ router.post("/get-popular-hours", protectRoute('volunteer'), async (req, res, ne
   }
   
 });
+
+router.post("/visits-list", protectRoute('volunteer'), async (req, res, next) => {
+
+  const {dates} = req.body ;
+
+  const dateBegin = new Date(dates[0]) ;
+  const dateEnd = new Date(dates[1]) ;
+
+  try {
+    //  get raw data (visits in the date range)
+    let visits = await Visits
+    .find({
+      date: {
+        $gte: dateBegin, 
+        $lte: dateEnd
+      }
+    })
+    .populate("category contactType")
+
+    res.status(200).json(visits) ;
+
+  } catch(err) {
+    res.status(500).json(err) ;
+  }
+
+})
+  
 
 
 module.exports = router ;
