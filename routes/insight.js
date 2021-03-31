@@ -14,7 +14,7 @@ router.post("/get-category-repartition", protectRoute('volunteer'), async (req, 
     .find({
       date: {
         $gte: dateBegin, 
-        $lt: dateEnd
+        $lte: dateEnd
       }
     })
     .populate("category contactType")
@@ -55,7 +55,7 @@ router.post("/get-popular-days", protectRoute('volunteer'), async (req, res, nex
     .find({
       date: {
         $gte: weekBegin, 
-        $lt: weekEnd
+        $lte: weekEnd
       }
     })
     .populate("category contactType")
@@ -81,11 +81,11 @@ router.post("/get-popular-days", protectRoute('volunteer'), async (req, res, nex
   const dayNames = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
   const agregatedData = [] ;
   for (let segment in agregatedDataTemp) {
-    agregatedData.push({name: dayNames[segment], value: Math.floor(agregatedDataTemp[segment])})
+    agregatedData.push({name: dayNames[segment], value: Math.round(agregatedDataTemp[segment])})
   }
 
 
-  res.status(200).json({agregatedData, updatedDates: [weekBegin, weekEnd]}) ;
+  res.status(200).json({agregatedData: agregatedData.filter(data => data.value !== 0), updatedDates: [weekBegin, weekEnd]}) ;
 
   } catch(err) {
     res.status(500).json(err);
@@ -99,6 +99,7 @@ router.post("/get-popular-days", protectRoute('volunteer'), async (req, res, nex
 router.post("/get-popular-hours", protectRoute('volunteer'), async (req, res, next) => {
 
   const {dates, weekDays} = req.body ;
+  console.log(weekDays)
 
   const dateBegin = new Date(dates[0]) ;
   const dateEnd = new Date(dates[1]) ;
@@ -109,7 +110,7 @@ router.post("/get-popular-hours", protectRoute('volunteer'), async (req, res, ne
     .find({
       date: {
         $gte: dateBegin, 
-        $lt: dateEnd
+        $lte: dateEnd
       }
     })
     .populate("category contactType")
@@ -142,10 +143,11 @@ router.post("/get-popular-hours", protectRoute('volunteer'), async (req, res, ne
     // transforme in the good rechart format
     const agregatedData = []  ;
     for (let segment in agregatedDataTemp) {
-      agregatedData.push({name: `${segment}h-${Number(segment)+1}h`, value: Math.floor(agregatedDataTemp[segment])})
+      agregatedData.push({name: `${segment}h-${Number(segment)+1}h`, value: Math.round(agregatedDataTemp[segment])})
     }
 
-    res.status(200).json(agregatedData) ;
+    console.log(agregatedData.filter(data => data.value !== 0))
+    res.status(200).json(agregatedData.filter(data => data.value !== 0)) ;
 
   } catch(err) {
     res.status(500).json(err);
