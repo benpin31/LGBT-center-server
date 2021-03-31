@@ -1,0 +1,36 @@
+{
+  "files": {
+    "main.css": "/static/css/main.2450a221.chunk.css",
+    "main.js": "/static/js/main.b9e01a51.chunk.js",
+    "main.js.map": "/static/js/main.b9e01a51.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.cef64032.js",
+    "runtime-main.js.map": "/static/js/runtime-main.cef64032.js.map",
+    "static/js/2.da7b407e.chunk.js": "/static/js/2.da7b407e.chunk.js",
+    "static/js/2.da7b407e.chunk.js.map": "/static/js/2.da7b407e.chunk.js.map",
+    "static/js/3.01afeb78.chunk.js": "/static/js/3.01afeb78.chunk.js",
+    "static/js/3.01afeb78.chunk.js.map": "/static/js/3.01afeb78.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.2450a221.chunk.css.map": "/static/css/main.2450a221.chunk.css.map",
+    "static/js/2.da7b407e.chunk.js.LICENSE.txt": "/static/js/2.da7b407e.chunk.js.LICENSE.txt",
+    "static/media/archive-icon.3b723ef2.svg": "/static/media/archive-icon.3b723ef2.svg",
+    "static/media/check-icon.36bd77f3.svg": "/static/media/check-icon.36bd77f3.svg",
+    "static/media/drop-down-downarrow.55d8cc96.svg": "/static/media/drop-down-downarrow.55d8cc96.svg",
+    "static/media/drop-down-uparrow.3d642aba.svg": "/static/media/drop-down-uparrow.3d642aba.svg",
+    "static/media/edit-icon.0d2adfe8.svg": "/static/media/edit-icon.0d2adfe8.svg",
+    "static/media/exit-icon.ee9ecdda.svg": "/static/media/exit-icon.ee9ecdda.svg",
+    "static/media/info-icon.d796eed5.svg": "/static/media/info-icon.d796eed5.svg",
+    "static/media/logo.8ab0c1bf.svg": "/static/media/logo.8ab0c1bf.svg",
+    "static/media/minus-icon.6e71681a.svg": "/static/media/minus-icon.6e71681a.svg",
+    "static/media/on-off-icon.3d90d127.svg": "/static/media/on-off-icon.3d90d127.svg",
+    "static/media/plus-icon.cc463e15.svg": "/static/media/plus-icon.cc463e15.svg",
+    "static/media/purple-plus-icon.e544e5d6.svg": "/static/media/purple-plus-icon.e544e5d6.svg",
+    "static/media/trash-icon.adbd3cc3.svg": "/static/media/trash-icon.adbd3cc3.svg",
+    "static/media/wait-icon.bf1db0d1.svg": "/static/media/wait-icon.bf1db0d1.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.cef64032.js",
+    "static/js/2.da7b407e.chunk.js",
+    "static/css/main.2450a221.chunk.css",
+    "static/js/main.b9e01a51.chunk.js"
+  ]
+}
