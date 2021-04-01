@@ -33,7 +33,7 @@ router.post("/get-category-repartition", protectRoute('volunteer'), async (req, 
 
 });
 
-/*  Get the average number of visit per day given a date range. Because of the insight it seems? natural to work on complete 
+/*  Get the average number of visit per day given a date range. Because of the insight, it seems(?) natural to work on complete 
     weeks, so we begin by rounding the date givent by the user*/
 router.post("/get-popular-days", protectRoute('volunteer'), async (req, res, next) => {
 
@@ -61,31 +61,31 @@ router.post("/get-popular-days", protectRoute('volunteer'), async (req, res, nex
     .populate("category contactType")
 
 
-  //  aggregate the data : the result od an object of the type {"1": value, "2": value } where "1", "2" is the day of the week
-  //  and value the number of visits
-  const agregatedDataTemp = {} ;
-  let day ;
-  let nbWeek = (weekEnd - weekBegin)/(1000 * 60 * 60 * 24 * 7) ;
-    //  weekEnd - weekBegin in millisecond
+    //  aggregate the data : the result is an object of the type {"1": value, "2": value, ... } where the numbers ("1", "2",...) 
+    //  is the day of the week and "value" the number of visits
+    const agregatedDataTemp = {} ;
+    let day ;
+    let nbWeek = (weekEnd - weekBegin)/(1000 * 60 * 60 * 24 * 7) ;
+      //  weekEnd - weekBegin in millisecond
 
-  visits.forEach(visit => {
-    day = visit.date.getDay() ;
-    if (agregatedDataTemp[day]) {
-      agregatedDataTemp[day] = agregatedDataTemp[day]+1/nbWeek ;
-    } else {
-      agregatedDataTemp[day] = 1/nbWeek ;
+    visits.forEach(visit => {
+      day = visit.date.getDay() ;
+      if (agregatedDataTemp[day]) {
+        agregatedDataTemp[day] = agregatedDataTemp[day]+1/nbWeek ;
+      } else {
+        agregatedDataTemp[day] = 1/nbWeek ;
+      }
+    })
+
+    //  transform the aggregated data in the rechart (datavis library) format : [{name: "lundi", value: value}, {name: "mardi", value: value}]
+    const dayNames = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+    const agregatedData = [] ;
+    for (let segment in agregatedDataTemp) {
+      agregatedData.push({name: dayNames[segment], value: Math.round(agregatedDataTemp[segment])})
     }
-  })
-
-  //  transform the aggregated data in the rechart (datavis library) format : [{name: "lundi", value: value}, {name: "mardi", value: value}]
-  const dayNames = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
-  const agregatedData = [] ;
-  for (let segment in agregatedDataTemp) {
-    agregatedData.push({name: dayNames[segment], value: Math.round(agregatedDataTemp[segment])})
-  }
 
 
-  res.status(200).json({agregatedData: agregatedData.filter(data => data.value !== 0), updatedDates: [weekBegin, weekEnd]}) ;
+    res.status(200).json({agregatedData: agregatedData.filter(data => data.value !== 0), updatedDates: [weekBegin, weekEnd]}) ;
 
   } catch(err) {
     res.status(500).json(err);
@@ -155,7 +155,8 @@ router.post("/get-popular-hours", protectRoute('volunteer'), async (req, res, ne
 });
 
 router.post("/visits-list", protectRoute('volunteer'), async (req, res, next) => {
-
+  //  Get the list of all visits in the date range given by the useer. The purpose is to create the raw data csv
+  //  V2 should be refacto and be part of  "/get visits" route
   const {dates} = req.body ;
 
   const dateBegin = new Date(dates[0]) ;

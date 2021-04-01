@@ -3,12 +3,13 @@ var router = express.Router();
 const Visits = require("../model/visits");
 const protectRoute = require('./../middlewares/protectRoute');
 
-/* GET the visits listing. */
+/* GET the visits listing of the current day. */
 router.get("/", protectRoute('volunteer'), (req, res, next) => {
-  // console.log(Date.now().toISOString().substring(0,9))
   const today=new Date()
   const dateBegin = today.toISOString().substring(0,10) + " 00:00:00"
   const dateEnd = today.toISOString().substring(0,10) + " 23:59:59"
+    // get current day
+
   Visits
     .find({
       date: {

@@ -4,6 +4,7 @@ const CategoriesModel = require('./../model/visitCategories');
 const protectRoute = require('./../middlewares/protectRoute');
 
 // api/categories
+//  Same call as contactType : V2 : refacto with params
 
 // GET all categories 
 router.get('/', protectRoute('volunteer'), (req, res, next) => {

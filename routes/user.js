@@ -15,10 +15,10 @@ router.get("/", protectAuth("admin"), async (req, res, next) => {
   // get all users : only for admins
   try {
     const users = await User
-                          .find()
-                          .select("-password")
-                          .sort({login: 1})
-                          .collation({ locale: 'en_US', caseLevel: true }) ; // Mongo sort uppercase before lowercase : use to avoid that
+      .find()
+      .select("-password")
+      .sort({login: 1})
+      .collation({ locale: 'en_US', caseLevel: true }) ; // Mongo sort uppercase before lowercase : use to avoid that
                           
     res.status(200).json(users);
   } catch (err) {
@@ -26,7 +26,10 @@ router.get("/", protectAuth("admin"), async (req, res, next) => {
   }
 });
 
+
 router.get("/:id", protectAuth("admin"), async (req, res, next) => {
+  // Get the user with id :id for crud purpose
+  // only if you are admin or if its your own account
   try {
     const { id } = req.params;
     const user = await User.findById(id);
