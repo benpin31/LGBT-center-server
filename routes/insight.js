@@ -3,21 +3,19 @@ var router = express.Router();
 const Visits = require("../model/visits");
 const protectRoute = require('./../middlewares/protectRoute');
 
-/* return the number of visit per category inside a given date range (in req.body). */
-router.post("/get-category-repartition", protectRoute('volunteer'), async (req, res, next) => {
+const getVisits = require('../services/visits')
 
-  const dateBegin = new Date(req.body.dates[0]) ;
-  const dateEnd = new Date(req.body.dates[1]) ;
+
+/* return the number of visit per category inside a given date range (in req.body). */
+router.get("/get-category-repartition", protectRoute('volunteer'), async (req, res, next) => {
+
+  const { query } = req;
+
+  const dateBegin = new Date(query.dateBegin) ;
+  const dateEnd = new Date(query.dateEnd) ;
 
   try {
-    const visits = await Visits
-    .find({
-      date: {
-        $gte: dateBegin, 
-        $lte: dateEnd
-      }
-    })
-    .populate("category contactType")
+    const visits = await getVisits(dateBegin, dateEnd);
 
     const categories = [...new Set(visits.map(visit => visit.category.name))] ;
     const agregatedData = [] ;
@@ -33,14 +31,15 @@ router.post("/get-category-repartition", protectRoute('volunteer'), async (req, 
 
 });
 
+
 /*  Get the average number of visit per day given a date range. Because of the insight, it seems(?) natural to work on complete 
     weeks, so we begin by rounding the date givent by the user*/
-router.post("/get-popular-days", protectRoute('volunteer'), async (req, res, next) => {
+router.get("/get-popular-days", protectRoute('volunteer'), async (req, res, next) => {
 
-  const {dates} = req.body ;
+  const { query } = req;
 
-  const dateBegin = new Date(dates[0]) ;
-  const dateEnd = new Date(dates[1]) ;
+  const dateBegin = new Date(query.dateBegin) ;
+  const dateEnd = new Date(query.dateEnd) ;
   
   //  Get dates and ​round them
   const dayBegin = dateBegin.getDay() ;
@@ -51,14 +50,8 @@ router.post("/get-popular-days", protectRoute('volunteer'), async (req, res, nex
 
   //  get raw data (visits in the date range)
   try {
-    const visits = await Visits
-    .find({
-      date: {
-        $gte: weekBegin, 
-        $lte: weekEnd
-      }
-    })
-    .populate("category contactType")
+    const visits = await getVisits(dateBegin, dateEnd);
+
 
 
     //  aggregate the data : the result is an object of the type {"1": value, "2": value, ... } where the numbers ("1", "2",...) 
@@ -96,23 +89,21 @@ router.post("/get-popular-days", protectRoute('volunteer'), async (req, res, nex
 
 
 /*  Get the average number of visit per hours given a date range. */
-router.post("/get-popular-hours", protectRoute('volunteer'), async (req, res, next) => {
+router.get("/get-popular-hours", protectRoute('volunteer'), async (req, res, next) => {
 
-  const {dates, weekDays} = req.body ;
+  const { query } = req;
 
-  const dateBegin = new Date(dates[0]) ;
-  const dateEnd = new Date(dates[1]) ;
+  const dateBegin = new Date(query.dateBegin) ;
+  const dateEnd = new Date(query.dateEnd) ;
 
   try {
     //  get raw data (visits in the date range)
-    let visits = await Visits
-    .find({
-      date: {
-        $gte: dateBegin, 
-        $lte: dateEnd
-      }
-    })
-    .populate("category contactType")
+    const visits = await getVisits(dateBegin, dateEnd);
+
+
+    const weekDays = query.weekDays.split(",") ;
+
+    console.log(weekDays)
 
     //  Filter by days selected by the user
     if (weekDays) {
@@ -120,7 +111,7 @@ router.post("/get-popular-hours", protectRoute('volunteer'), async (req, res, ne
       weekDayNumbers = weekDays.map(weekDay => dayNames.indexOf(weekDay))
       visits = visits.filter(visit =>  weekDayNumbers.includes(visit.date.getDay())) ;
     } 
-      
+
     //  aggregate the data : the result od an object of the type {"1": value, "2": value } where "1", "2" is the day of the hour
     //  and value the number of visits
     const agregatedDataTemp = {} ;
@@ -153,34 +144,5 @@ router.post("/get-popular-hours", protectRoute('volunteer'), async (req, res, ne
   }
   
 });
-
-router.post("/visits-list", protectRoute('volunteer'), async (req, res, next) => {
-  //  Get the list of all visits in the date range given by the useer. The purpose is to create the raw data csv
-  //  V2 should be refacto and be part of  "/get visits" route
-  const {dates} = req.body ;
-
-  const dateBegin = new Date(dates[0]) ;
-  const dateEnd = new Date(dates[1]) ;
-
-  try {
-    //  get raw data (visits in the date range)
-    let visits = await Visits
-    .find({
-      date: {
-        $gte: dateBegin, 
-        $lte: dateEnd
-      }
-    })
-    .populate("category contactType")
-
-    res.status(200).json(visits) ;
-
-  } catch(err) {
-    res.status(500).json(err) ;
-  }
-
-})
-  
-
 
 module.exports = router ;
