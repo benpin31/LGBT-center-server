@@ -1,8 +1,10 @@
 var express = require("express");
 var router = express.Router();
-const Visits = require("../model/visits");
+
+// middlewares
 const protectRoute = require('./../middlewares/protectRoute');
 
+// service layers
 const { getVisits, createVisit, updateVisit, deleteVisit } = require('../services/visits')
 
 /* GET the visits listing of the current day. */

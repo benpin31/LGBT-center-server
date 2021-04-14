@@ -13,8 +13,8 @@ const getVisits = async (dateBegin, dateEnd) => {
 
 		return visits;
 	} catch (err) {
-		f
 		console.log(err);
+		throw new Error(err)
 	}
 
 }
@@ -29,6 +29,7 @@ const createVisit = async (category, contactType) => {
 		return newVisit;
 	} catch (err) {
 		console.log(err);
+		throw new Error(err)
 	}
 }
 
@@ -38,6 +39,7 @@ const updateVisit = async (id, newProperties) => {
 		return updatedVisit;
 	} catch (err) {
 		console.log(err);
+		throw new Error(err)
 	}
 }
 
@@ -47,6 +49,7 @@ const deleteVisit = async (id) => {
 		return deletedVisit;
 	} catch (err) {
 		console.log(err);
+		throw new Error(err)
 	}
 }
 
