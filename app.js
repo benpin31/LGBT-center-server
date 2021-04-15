@@ -31,7 +31,7 @@ app.use(
         secret: process.env.SESSION_SECRET,
         resave: true,
         saveUninitialized: true,
-        cookie: {maxAge: new Date(Date.now() + (30 * 86400 * 1000))}
+        cookie: {maxAge: 24*3600*1000} //new Date(Date.now() + (1000))}
     })
 );
 
