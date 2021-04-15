@@ -5,7 +5,6 @@ var router = express.Router();
 const { protectAuth } = require('./../middlewares/protectRoute');
 
 // services layers
-const { getVisits } = require('../services/visits')
 const { getCategoriesRepartition, getPopularDays, getPopularHours } = require('./../services/insights')
 
 
