@@ -2,13 +2,13 @@ var express = require("express");
 var router = express.Router();
 
 // middlewares
-const protectRoute = require('./../middlewares/protectRoute');
+const {protectAuth} = require('./../middlewares/protectRoute');
 
 // service layers
 const { getVisits, createVisit, updateVisit, deleteVisit } = require('../services/visits')
 
 /* GET the visits listing of the current day. */
-router.get("/", protectRoute('volunteer'), async (req, res, next) => {
+router.get("/", protectAuth('volunteer'), async (req, res, next) => {
 	const { query } = req;
 
 	const today = new Date()
@@ -28,7 +28,7 @@ router.get("/", protectRoute('volunteer'), async (req, res, next) => {
 });
 
 /* POST create visits. */
-router.post("/", protectRoute('volunteer'), async (req, res, next) => {
+router.post("/", protectAuth('volunteer'), async (req, res, next) => {
 	let { category, contactType } = req.body;
 
 	try {
@@ -41,7 +41,7 @@ router.post("/", protectRoute('volunteer'), async (req, res, next) => {
 });
 
 /* PATCH modify visits. */
-router.patch("/:id", protectRoute('volunteer'), async (req, res, next) => {
+router.patch("/:id", protectAuth('volunteer'), async (req, res, next) => {
 	//V2 check if category - contact exists and is current
 
 	const { id } = req.params;
@@ -58,7 +58,7 @@ router.patch("/:id", protectRoute('volunteer'), async (req, res, next) => {
 });
 
 /* DELETE visits. */
-router.delete("/:id", protectRoute('volunteer'), async (req, res, next) => {
+router.delete("/:id", protectAuth('volunteer'), async (req, res, next) => {
 
 	const { id } = req.params;
 

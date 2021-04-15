@@ -2,14 +2,14 @@ var express = require("express");
 var router = express.Router();
 
 // middlewares
-const protectRoute = require('./../middlewares/protectRoute');
+const {protectAuth} = require('./../middlewares/protectRoute');
 
 // services layers
 const { getVisits } = require('../services/visits')
 
 
 /* return the number of visit per category inside a given date range (in req.body). */
-router.get("/get-category-repartition", protectRoute('volunteer'), async (req, res, next) => {
+router.get("/get-category-repartition", protectAuth('volunteer'), async (req, res, next) => {
 
 	const { query } = req;
 
@@ -36,7 +36,7 @@ router.get("/get-category-repartition", protectRoute('volunteer'), async (req, r
 
 /*  Get the average number of visit per day given a date range. Because of the insight, it seems(?) natural to work on complete 
 	 weeks, so we begin by rounding the date givent by the user*/
-router.get("/get-popular-days", protectRoute('volunteer'), async (req, res, next) => {
+router.get("/get-popular-days", protectAuth('volunteer'), async (req, res, next) => {
 
 	const { query } = req;
 
@@ -89,7 +89,7 @@ router.get("/get-popular-days", protectRoute('volunteer'), async (req, res, next
 
 
 /*  Get the average number of visit per hours given a date range. */
-router.get("/get-popular-hours", protectRoute('volunteer'), async (req, res, next) => {
+router.get("/get-popular-hours", protectAuth('volunteer'), async (req, res, next) => {
 
 	const { query } = req;
 
