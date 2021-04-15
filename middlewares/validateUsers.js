@@ -9,11 +9,13 @@ const validateUsers = (crudType) => {
       try {
          let user ;
          if (crudType === "update" || crudType === "delete") {
+            // protection against hacker if they acces api outside the user interface
             user = await getOneUser(id);
             if (!user) {
                return res.status(400).json("User doesn't exist");
             }
          }
+
          if (crudType === "create") {
             user = await getOneUserByName(login);
             console.log("user:", user)
