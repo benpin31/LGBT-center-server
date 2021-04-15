@@ -13,7 +13,7 @@ const getContactTypes = async () => {
 	}
 }
 
-const createContactTypes = async name => {
+const createContactType = async name => {
 	try {
 		const newContactType = await ContactTypesModel.create({ name, isActive: true })
 		return newContactType;
@@ -23,7 +23,7 @@ const createContactTypes = async name => {
 	}
 }
 
-const updateContactTypes = async (id, updatedValues) => {
+const updateContactType = async (id, updatedValues) => {
 	try {
 		const updatedContactType = ContactTypesModel.findByIdAndUpdate(id, updatedValues, { new: true }) ;
 		return updatedContactType ;
@@ -33,4 +33,4 @@ const updateContactTypes = async (id, updatedValues) => {
 	}
 }
 
-module.exports = { getContactTypes, createContactTypes, updateContactTypes };
+module.exports = { getContactTypes, createContactType, updateContactType };

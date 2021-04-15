@@ -3,10 +3,9 @@ const validateContactTypes = (req, res, next) => {
 
 	if (name.length < 3) {
 		return res.status(400).json("name too short");
-		
 	}
 	next()
 
 }
 
-module.exports = validateContactTypes ;
+module.exports = validateContactTypes;

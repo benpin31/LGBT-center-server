@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const ContactTypesModel = require('./../model/contactTypes');
 
 //	middlewares
 const protectRoute = require('./../middlewares/protectRoute');
 const validateContactTypes = require('./../middlewares/validateContactTypes');
 
 //	services
-const { getContactTypes, createContactTypes, updateContactTypes } = require('./../services/contactTypes')
+const { getContactTypes, createContactType, updateContactType } = require('./../services/contactTypes')
 
 // api/contactTypes
 //  Same call as categories : V2 : refacto with params
@@ -28,7 +27,7 @@ router.post('/', protectRoute('admin'), validateContactTypes, async (req, res, n
 	const { name } = req.body;
 
 	try {
-		const newContactType = await createContactTypes(name);
+		const newContactType = await createContactType(name);
 		res.status(200).json(newContactType)
 	} catch (err) {
 		res.status(500).json(err.toString())
@@ -43,7 +42,7 @@ router.patch('/:id', protectRoute('admin'), validateContactTypes, async (req, re
 
 	const {id} = req.params ;
 	try {
-		const updatedContactType = await updateContactTypes(id, req.body);
+		const updatedContactType = await updateContactType(id, req.body);
 		res.status(200).json(updatedContactType)
 	} catch (err) {
 		res.status(500).json(err.toString())
