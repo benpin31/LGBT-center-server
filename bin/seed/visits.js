@@ -10,7 +10,6 @@ const seed = require('./seed.json')
 
 
 getId = (propertyName, value, db) => {
-    // console.log(value) 
     return  db.find(doc => doc[propertyName] === value)._id
 }
 
@@ -30,7 +29,6 @@ const insert = async() => {
                 }
             }
         )
-        console.log(new Date())
         const toInsertToday = toInsert.filter(visit => new Date(visit.date) < new Date()) ;
 
         const inserted = await visitsModel.insertMany(toInsertToday);
