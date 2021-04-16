@@ -11,10 +11,12 @@ const salt = 10;
 
 router.post("/signin", (req, res, next) => {
   //  A user is identify by a login (no email) and a password
+
   const { login, password } = req.body;
   User.findOne({ login })
     .then((userDocument) => {
       if (!userDocument) {
+        console.log('user document')
         return res.status(400).json({ message: "Invalid credentials" });
       }
 
