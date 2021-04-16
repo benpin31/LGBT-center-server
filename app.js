@@ -9,11 +9,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const mongoose = require("mongoose");
 const cors = require("cors");
-const getDevEnvironment = require("./middlewares/devEnvironment")
 const app = express();
-
-
-
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -23,10 +19,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(
     cors({
-        origin: process.env.FRONT_END_URL ,
+        origin: process.env.FRONT_END_URL,
         credentials: true
     })
 )
+//  to authorize the front to communicate with the back
 
 app.use(
     session({
@@ -34,13 +31,9 @@ app.use(
         secret: process.env.SESSION_SECRET,
         resave: true,
         saveUninitialized: true,
-        cookie: {maxAge: new Date(Date.now() + (30 * 86400 * 1000))}
-        // cookie: {maxAge: new Date(Date.now() + (30 * 86400 * 1000))}
-        // cookie: {maxAge: 8000000}
+        cookie: {maxAge: 24*3600*1000} //new Date(Date.now() + (1000))}
     })
 );
-
-// app.use(getDevEnvironment) ;
 
 const authRouter = require('./routes/auth');
 const userRouter = require("./routes/user");
@@ -57,6 +50,7 @@ app.use('/api/contactTypes', contactTypesRouter);
 app.use('/api/visits', visitsRouter);
 app.use('/api/insight', insightRouter)
 
+// for deployement
 if (process.env.NODE_ENV === "production") {
     app.use("*", (req, res, next) => {
       // If no routes match, send them the React HTML.
