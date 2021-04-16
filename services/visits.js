@@ -10,6 +10,7 @@ const getVisits = async (dateBegin, dateEnd) => {
 				}
 			})
 			.populate("category contactType")
+			.sort({date: -1})
 
 		return visits;
 	} catch (err) {

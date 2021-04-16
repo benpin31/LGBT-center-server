@@ -18,7 +18,6 @@ const validateUsers = (crudType) => {
 
          if (crudType === "create") {
             user = await getOneUserByName(login);
-            console.log("user:", user)
             if (user) {
                return res.status(400).json({ message: "Login already used" });
             }

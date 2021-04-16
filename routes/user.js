@@ -15,7 +15,6 @@ const salt = 10;
 /////////////////////////////////////
 
 router.get("/", protectAuth("admin"), async (req, res, next) => {
-  console.log("titi")
   // get all users : only for admins
   try {
     const users = await getUsers();

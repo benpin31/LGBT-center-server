@@ -12,11 +12,12 @@ router.get("/", protectAuth('volunteer'), async (req, res, next) => {
 	const { query } = req;
 
 	const today = new Date()
-	query.dateBegin = query.dateBegin ? query.dateBegin : today.toISOString();
-	query.dateEnd = query.dateEnd ? query.dateEnd : today.toISOString();
+	query.dateBegin = query.dateBegin ? new Date(query.dateBegin).toISOString() : today.toISOString();
+	query.dateEnd = query.dateEnd ? new Date(query.dateEnd).toISOString() : today.toISOString();
 
 	const dateBegin = query.dateBegin.substring(0, 10) + " 00:00:00"
 	const dateEnd = query.dateEnd.substring(0, 10) + " 23:59:59"
+
 
 	try {
 		const visits = await getVisits(dateBegin, dateEnd);
@@ -49,7 +50,6 @@ router.patch("/:id", protectAuth('volunteer'), async (req, res, next) => {
 
 	try {
 		const updatedVisit = await updateVisit(id, newProperties);
-		console.log(updatedVisit)
 		res.status(200).json(updatedVisit);
 	} catch (err) {
 		res.status(500).json(err)

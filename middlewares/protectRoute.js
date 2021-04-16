@@ -1,3 +1,6 @@
+const { getOneUser } = require('./../services/user')
+
+
 const protectAuth = (protectionLevel) => {
     // return an authentification middleware depending of the type a account : 
     //  if "admin" protection : the session must belongs to an admin user, 
@@ -31,15 +34,22 @@ const protectAccesUser = (req, res, next) => {
     }
 }
 
-const protectUpdateUser = (req, res, next) => {
+const protectUpdateUser = async (req, res, next) => {
     const { id } = req.params;
 
-    if (id !== req.session.currentUser.id) {
-        // the user can only update its own account
-        return res.status(403).json("Users can edit only their own account");
-    }
+    try {
+        const userToUpdate = await getOneUser(id) ;
 
-    next()
+        if (id !== req.session.currentUser.id && userToUpdate.isAdmin) {
+            // the user can only update its own account
+            return res.status(403).json("Users can edit only their own account");
+        }
+
+        next()
+
+    } catch(err) {
+        res.status(500).json(err.toString())
+    }
 
 }
 
