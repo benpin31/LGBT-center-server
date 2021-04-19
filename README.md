@@ -1,4 +1,4 @@
-# IDF-LGBTQI+ CENTER APP
+# IDF-LGBTQI+ CENTER APP :rainbow_flag:
 
 ## What is our app about?
 
