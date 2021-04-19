@@ -29,22 +29,11 @@ With these informations in hands we went to work!
 
 ## Tech stack
 
-### client
-- React.js
-- CSS
-- Recharts.js
-- React-calendar
-
-### server
-- Node.js
-- Express.js
-- MongoDB
-
-| Client   |     Server    |
-|----------|:-------------:|
-| React.js |  Node.js      |
-| CSS      |  Express.js   |
-| Recharts.js | MongoDB |
+| Client      |     Server    |
+|:-----------:|:-------------:|
+| React.js    |  Node.js      |
+|   CSS       |  Express.js   |
+| Recharts.js | MongoDB       |
 
 ## API documentation:
 
