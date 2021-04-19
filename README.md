@@ -1,4 +1,4 @@
-# LGBT CENTER APP
+# IDF-LGBTQI+ CENTER APP
 
 ## What is our app about?
 
