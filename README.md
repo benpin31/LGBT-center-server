@@ -1,4 +1,4 @@
-# IDF-LGBTQI+ CENTER APP :rainbow_flag:
+# IDF-LGBTQI+ CENTER APP (SERVER SIDE) :rainbow_flag:
 
 ## What is our app about?
 
@@ -23,8 +23,6 @@ With these informations in hands we went to work!
 
 (Username: Admin, Password: 1234)
 
-### [Check the client side here](https://github.com/benpin31/LGBT-center-client)
-
 ![](https://media0.giphy.com/media/l4hvNQ8U3bFysxC4wr/giphy.gif)
 
 ## Tech stack
@@ -34,6 +32,7 @@ With these informations in hands we went to work!
 | React.js    |  Node.js      |
 |   CSS       |  Express.js   |
 | Recharts.js | MongoDB       |
+### [Check the client side here](https://github.com/benpin31/LGBT-center-client)
 
 ## API documentation:
 
