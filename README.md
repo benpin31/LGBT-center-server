@@ -19,9 +19,11 @@ We met with employees to try and figure out what they actually needed. We ended 
 
 With these informations in hands we went to work!
 
-### [Test our app here](https://lgbtqi-plus-test.herokuapp.com/history)
+### [Test our app here](https://lgbtqi-plus-test.herokuapp.com/)
 
 (Username: Admin, Password: 1234)
+
+### [Check the client side here](https://github.com/benpin31/LGBT-center-client)
 
 ![](https://media0.giphy.com/media/l4hvNQ8U3bFysxC4wr/giphy.gif)
 
