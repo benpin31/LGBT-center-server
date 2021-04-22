@@ -10,10 +10,12 @@ const salt = 10;
 /////////////////////////////////////
 
 router.post("/signin", (req, res, next) => {
-  //  A user is identify by a login (no email) and a password
+  //  A user is identified by a login (no email) and a password
 
   const { login, password } = req.body;
-  User.findOne({ login })
+  const lowerCaseLogin = login.toLowerCase();
+
+  User.findOne({ login: lowerCaseLogin })
     .then((userDocument) => {
       if (!userDocument) {
         console.log('user document')

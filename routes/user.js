@@ -42,9 +42,10 @@ router.post("/create", protectAuth("admin"), validateUsers("create"), async (req
   // then the owner of an acconut can update it.
   // Only admins can create an account, thats why we use protectAuth("admin") middlware (it's a closure)
   const { login, password, isAdmin } = req.body;
+  const lowerCaseLogin = login.toLowerCase();
 
   try {
-    const newUser = await createUser({ login, password, isAdmin })
+    const newUser = await createUser({ login : lowerCaseLogin, password, isAdmin })
     res.status(200).json(newUser);
   } catch (err) {
     res.status(500).json(err);
@@ -68,6 +69,9 @@ router.delete("/delete/:id", protectAuth("admin"), protectDeleteUser, validateUs
 
 router.patch("/edit/:id", protectAuth("admin"), protectUpdateUser, validateUsers("update"), async (req, res, next) => {
   const { id } = req.params;
+  const { login, password, isAdmin } = req.body;
+  const lowerCaseLogin = login.toLowerCase();
+
   //  the user can't modify the fact that he is admin or not
   //  He can also choose not to update the password. As we can't 
   //  send the password to the front to add it as default value of the input,
@@ -75,10 +79,9 @@ router.patch("/edit/:id", protectAuth("admin"), protectUpdateUser, validateUsers
   //  current password
 
   try {
-    const updatedUser = await updateUser(id, req.body);
-    const { login, isAdmin, _id } = updatedUser;
-    res.status(200).json({ login, isAdmin, _id });
-
+    const updatedUser = await updateUser(id, { login : lowerCaseLogin, password, isAdmin });
+    const {_id} = updatedUser;
+    res.status(200).json({lowerCaseLogin, isAdmin, _id});
   } catch (err) {
     res.status(500).json(err);
   }

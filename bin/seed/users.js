@@ -8,17 +8,17 @@ const UserModel = require("./../../model/users");
 async function create() {
   const toInsert = [
     {
-      login: "Irenne",
+      login: "irenne",
       password: bcrypt.hashSync("1234", 10),
       isAdmin: true
     },
     {
-      login: "Marc",
+      login: "marc",
       password: bcrypt.hashSync("1234", 10),
       isAdmin: true
     },
     {
-      login: "Benevole",
+      login: "benevole",
       password: bcrypt.hashSync("1234", 10),
       isAdmin: false
     },
