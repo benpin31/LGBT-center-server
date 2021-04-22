@@ -36,6 +36,56 @@ With these informations in hands we went to work!
 
 ## API documentation:
 
+
+The route for the API is ```https://centre-lgbtqiplus-idf.herokuapp.com/api```
+
+### Insights
+
+|Method |Endpoint   |Protections   |response (200)   |Action   |
+|---|---|---|---|---|
+|GET|/insight/get-category-repartition?dateBegin=\<dateBegin\>&dateEnd=\<dateEnd\> |Volunteer|[{name, value}]|Return an array of objects of the form ```{name, values}``` where <ul><li>name : visit category name</li><li>value : number of visit corresponding to the category in the periode ```<dateBegin>``` -> ```<dateEnd>```</li></ul> Dates must be given in simplified extended ISO format : YYYY-MM-DDTHH:mm:ss.sssZ|
+|GET|/insight/get-popular-days?dateBegin=\<dateBegin\>&dateEnd=\<dateEnd\> |Volunteer|{[{name, value}, [weekBegin, weekEnd]}]| return an object of aggregated data and new period range. Agregated data is an array of objects of the form ```{name, values}``` where <ul><li>name : weekday</li><li>value : average number of visit per day in the period ```<weekBegin>``` -> ```<weekEnd>```. ```<weekBegin>``` and ```<weekEnd>``` "round" ```<dateBegin>``` and ```<dateEnd>``` to compute on full week. The new period range returned is the array of the two new date limits</li></ul> Dates must be given in simplified extended ISO format : YYYY-MM-DDTHH:mm:ss.sssZ|
+|GET|/insight/get-popular-hours?dateBegin=\<dateBegin\>&dateEnd=\<dateEnd\>[&weekDays=\<weekDay1\>,\<weekday2\>...] |Volunteer|[{name, value}]|Return an array of objects of the form ```{name, values}``` where <ul><li>name : and hour of the day</li><li>value : average number of visit per hour in the period ```<dateBegin>``` -> ```<dateEnd>``` computed on weekdays \<weekDay1\>,\<weekday2\> if some weekdays ae provided as query-string, on all weekdays else</li></ul> Dates must be given in simplified extended ISO format : YYYY-MM-DDTHH:mm:ss.sssZ. ```<weekdays>``` must be provided a list of weedays in french, separeted with coma without space : Lundi,Mardi,Samedi|
+
+
+
+### Users
+|Method |Endpoint   |Protections   |response (200)   |Action   |
+|---|---|---|---|---|
+| GET     | /user/        | Admin | [users] | Get all the users of the App|
+| GET     | /user/:id       | Admin | {user} | Get user of ```ìd``` id of the app|
+| POST    | /user/create    | Admin | {user} (created)  | Create a user in the data base. The 3 following properties must be given <ul><li>```login``` : at least 3 characters</li><li>```password``` : at least 3 characters</li><li>```isAdmin``` : boolean</li></ul>|
+| DELETE  | /user/delete/:id | Admin<br/> A user can't delete his/her own account | {user} (deleted) | Delete user of ```ìd``` id from the app|
+| PATCH  | /user/edit/:id | Admin<br/> Users can edit only their own account or volunteer account | {user} (deleted) | Edit user of ```ìd``` id from the app. The 3 following properties must be given <ul><li>```login``` : at least 3 characters</li><li>```password``` : at least 3 characters</li><li>```isAdmin``` : boolean</li></ul>||
+
+### Categories
+
+|Method |Endpoint   |Protections   |response (200)   |Action   |
+|---|---|---|---|---|
+| GET | /categories/| Volunteer | [categories] | Get all the categories |
+| POST | /categories/| Admin | {category} | Create a category. The two following properties must be given : <ul><li>```name``` : at least 3 characters</li><li>```description``` : at least 3 characters</li></ul>By default, a category is active when created. The creator can't choose another value|
+| PATCH | /categories/:id | Admin | {category} | Edit the category of ```ìd``` id. The three following properties must be given : <ul><li>```name``` : at least 3 characters</li><li>```description``` : at least 3 characters</li><li>```isActive``` : Boolean</li></ul>|
+
+### Contact types
+
+|Method |Endpoint   |Protections   |response (200)   |Action   |
+|---|---|---|---|---|
+| GET | /contactTypes/| Volunteer | [categories] | Get all the categories |
+| POST | /contactTypes/| Admin | {category} | Create a contact type. The following property must be given : <ul><li>```name``` : at least 3 characters</li></ul>By default, a contact type is active when created. The creator can't choose another value|
+| PATCH | /contactTypes/:id | Admin | {category} | Edit the category of ```ìd``` id. The two following properties must be given : <ul><li>```name``` : at least 3 characters</li><li>```isActive``` : Boolean</li></ul>|
+
+
+### Visits
+
+|Method |Endpoint   |Protections   |response (200)   |Action   |
+|---|---|---|---|---|
+|GET| /visits/[?dateBegin=\<dateBegin\>&dateEnd=\<dateEnd\>]|Volunteer|[visits]| Get all visits between ```<dateBegin>``` and ```<dateEnd>```. If ```<dateBegin>``` is not given, by default it will be begining of the current day. If ```<dateEnd>```  is not given, by default it will be end of the current day. Date must be given in simplified extended ISO format : YYYY-MM-DDTHH:mm:ss.sssZ|
+|POST| /visits/|Volunteer|{visit}|Create a new visit. The two following properties must be given <ul><li>a contact type ```ìd```</li><li>a category ```ìd```</li></ul>|
+|PATCH| /visits/:id |Volunteer|{visit}|Edit the visit of ```ìd``` id. The two following properties must be given : <ul><li>```category``` : mongoDB id </li><li>```contact type``` : mongoDB id</li></ul>|
+|DELETE| /visits/:id |Volunteer|{visit}|Delete visit of ```ìd``` id from the app|
+
+
+
 ## Made by:
 
 ☞ Benjamin Pinard - [here](https://github.com/benpin31)
