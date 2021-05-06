@@ -12,6 +12,9 @@ const schema = new Schema( {
         ref: "contactTypes",
         required: true
     },
+    comment: {
+        type: String
+    },
     date: {type: Date, default: Date.now},
 })
 

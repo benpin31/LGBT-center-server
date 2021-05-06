@@ -30,10 +30,10 @@ router.get("/", protectAuth('volunteer'), async (req, res, next) => {
 
 /* POST create visits. */
 router.post("/", protectAuth('volunteer'), async (req, res, next) => {
-	let { category, contactType } = req.body;
+	let { category, contactType, comment } = req.body;
 
 	try {
-		const newVisit = await createVisit(category, contactType);
+		const newVisit = await createVisit(category, contactType, comment);
 		res.status(200).json(newVisit)
 	} catch (err) {
 		res.status(500).json(err)

@@ -20,11 +20,12 @@ const getVisits = async (dateBegin, dateEnd) => {
 
 }
 
-const createVisit = async (category, contactType) => {
+const createVisit = async (category, contactType, comment) => {
 	try {
 		const newVisit = await Visits.create({
 			category,
-			contactType
+			contactType,
+			comment
 		})
 
 		return newVisit;
