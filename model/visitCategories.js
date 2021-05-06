@@ -14,6 +14,11 @@ const schema = new Schema( {
     isActive: {
         type: Boolean, 
         required: true
+    },
+    requiredComment: {
+        type: Boolean,
+        required: true,
+        default: false   
     }
 })
 
